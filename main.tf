@@ -1,4 +1,12 @@
-# To avoid having to specify a prefix, a random string is generated if none is provided. Also helps prevent naming collisions.
+locals {
+  prefix = "${random_string.prefix.result}"
+  tags = [
+    "project:${local.prefix}",
+    "owner:${var.owner}",
+    "provider:ibm"
+  ]
+
+}
 resource "random_string" "prefix" {
   length  = 4
   special = false
@@ -16,8 +24,8 @@ resource "ibm_compute_vm_instance" "test" {
   private_network_only     = false
   flavor_key_name          = "BL2_2X8X100"
   tags                     = local.tags
-  public_vlan_id           = "1379"
-  private_vlan_id          = 1679
+  public_vlan_id           = "2998166"
+  private_vlan_id          = "2998168"
   dedicated_acct_host_only = false
   ipv6_enabled             = true
 }
